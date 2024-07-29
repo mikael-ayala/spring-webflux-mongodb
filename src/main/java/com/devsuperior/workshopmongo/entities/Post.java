@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @Document(collection = "post")
 public class Post {
@@ -17,6 +18,9 @@ public class Post {
 	private String title;
 	private String body;
 	private Author author;
+
+	@DocumentReference(lazy = true)
+	private User user;
 	
 	private List<Comment> comments = new ArrayList<>();
 	
@@ -87,10 +91,18 @@ public class Post {
 		return author.getName();
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public List<Comment> getComments() {
 		return comments;
 	}
-	
+
 	public void addComment(String CommentText, Instant commentDate, String authorId, String authorName) {
 		Comment comment = new Comment(CommentText, date, authorId, authorName);
 		comments.add(comment);
