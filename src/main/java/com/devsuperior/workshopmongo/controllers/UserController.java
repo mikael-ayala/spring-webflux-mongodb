@@ -24,7 +24,7 @@ public class UserController {
 		return service.findAll();
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping(value = "/{id}")
 	public Mono<ResponseEntity<UserDTO>> findById(@PathVariable String id) {
 		return service.findById(id)
 				.map(userDTO -> ResponseEntity.ok().body(userDTO));
